@@ -1,29 +1,25 @@
 #include <iostream>
 #include <cmath>
- 
-float roots = 0;
-float equation = 0;
 
 
 float discr(float a, float b, float c)
 {
-    float discriminant = b*b - 4*a*c;
-    return discriminant;
+    return b*b - 4*a*c;
 }
     
-float square_equation(float a, float b, float c, float signed_sqrt_discr, float x)
+float squareEquation(float a, float b, float c, float signedSqrtDiscr, float x)
     {
-    x = (-b + signed_sqrt_discr)/(2*a);
+    x = (-b + signedSqrtDiscr)/(2*a);
     return x;
     }
     
-float linear_equation(float b, float c, float x)
+float linearEquation(float b, float c, float x)
     {
     x = -c/b;
     return x;
     }
     
-float check_roots(float a, float b, float c)
+float checkRoots(float a, float b, float c, float roots, float &equation)
 {
     if (abs(a) < 0.000000001)
         {
@@ -59,16 +55,35 @@ float check_roots(float a, float b, float c)
     return roots;  
 }
 
-void print_results(float roots, float x, float x1)
+void printResults(float rootsNumber, float x, float x1)
     {
-    if (roots == 1 || roots == 2)
+    if (rootsNumber == 1 || rootsNumber == 2)
         std::cout << "x1 = " << x << std::endl;
-    if (roots == 2)
+    if (rootsNumber == 2)
         std::cout << "x2 = " << x1 << std::endl;
     }
+    
+void solveEquation(float a, float b, float c, float &x, float &x1, float &equation, float rootsNumber)
+{
+    if (equation == 0)
+        x = linearEquation(b, c, x);
+             
+    if (equation == 1)
+        {
+        float signedSqrtDiscr = sqrt(discr(a, b, c));
+        x = squareEquation(a, b, c, signedSqrtDiscr, x);
+        if (rootsNumber == 2)
+            {
+            signedSqrtDiscr *= (-1);
+            x1 = squareEquation(a, b, c, signedSqrtDiscr, x1);
+            }
+        }
+}
 
 int main()
 {
+    float equation = 0;
+    float roots = 0;
     float a = 0;
     float b = 0;
     float c = 0;
@@ -78,22 +93,9 @@ int main()
     std::cout << "Enter the coefficients a, b and c: ";
     std::cin >> a >> b >> c;
     
-     
-    float roots = check_roots(a, b, c);
-     
-    if (equation == 0)
-        x = linear_equation(b, c, x);
-         
-    if (equation == 1)
-        {
-        float signed_sqrt_discr = sqrt(discr(a, b, c));
-        x = square_equation(a, b, c, signed_sqrt_discr, x);
-        if (roots == 2)
-            {
-            signed_sqrt_discr *= (-1);
-            x1 = square_equation(a, b, c, signed_sqrt_discr, x1);
-            }
-        }
+    float rootsNumber = checkRoots(a, b, c, roots, equation);
+    
+    solveEquation(a, b, c, x, x1, equation, rootsNumber);
         
-    print_results(roots, x, x1);
+    printResults(rootsNumber, x, x1);
 }
