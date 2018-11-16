@@ -1,0 +1,75 @@
+#include <iostream>
+#include <cassert>
+#include <stdio.h>
+
+void Equal(int value1, int value2)
+{
+    if (value1 == value2)
+    {
+        std::cout<<"value1 is equal to value2"<<std::endl;
+    }
+    else
+    {
+        std::cout<<"value1 is not equal to value2"<<std::endl;
+    }
+}
+
+void Nequal(int value1, int value2)
+{
+    if (value1 != value2)
+    {
+        std::cout<<"value1 is not equal to value2"<<std::endl;
+    }
+    else
+    {
+        std::cout<<"value1 is equal to value2"<<std::endl;
+    }
+}
+
+void True(int value1)
+{
+    if (value1 == 0)
+    {
+        std::cout<<"value1 is equal to 0"<<std::endl;
+    }
+    else
+    {
+        std::cout<<"value1 is not equal to 0"<<std::endl;
+    }
+}
+
+void False(int value1)
+{
+    if (value1 != 0)
+    {
+        std::cout<<"value1 is not equal to 0"<<std::endl;
+    }
+    else
+    {
+        std::cout<<"value1 is equal to 0"<<std::endl;
+    }
+}
+
+
+
+#define ASSERT_EQUAL(value1, value2) assert(value1 == value2); std::cout<<"value1 is equal to value2"<<std::endl
+#define ASSERT_NEQUAL(value1, value2) assert(value1 !== value2); std::cout<<"value1 is not equal to value2"<<std::endl
+#define ASSERT_TRUE(value1) assert(value1 == 0); std::cout<<"value1 is equal to 0"<<std::endl
+#define ASSERT_FALSE(value1) assert(value1 != 0); std::cout<<"value1 is not equal to 0"<<std::endl
+
+int main()
+{
+    int value1;
+    int value2;
+    std::cin>>value1;
+    std::cin>>value2;
+    Equal(value1, value2);
+    Nequal(value1, value2);
+    True(value1);
+    False(value1);
+    ASSERT_EQUAL(value1, value2);
+    ASSERT_NEQUAL(value1, value2);
+    ASSERT_TRUE(value1);
+    ASSERT_FALSE(value1);
+    return 0;
+}
